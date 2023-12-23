@@ -1,0 +1,59 @@
+---
+- name: Converge
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  roles:
+    - role: ansible-role-bareos_sd
+      bareos_sd_backup_configurations: yes
+      bareos_sd_install_debug_packages: yes
+      bareos_sd_devices:
+        - name: "FileStorage"
+          description: "File device. A connecting Director must have the same Name and MediaType."
+          media_type: "File"
+          archive_device: "/var/lib/bareos/storage"
+          label_media: yes
+          random_access: yes
+          automatic_mount: yes
+          removable_media: no
+          always_open: no
+          maximum_concurrent_jobs: 1
+        - name: "disabled-device"
+          enabled: no
+      bareos_sd_directors:
+        - name: bareos-dir
+          password: "somepassword"
+        - name: "disabled-director"
+          enabled: no
+      bareos_sd_messages:
+        - name: "Standard"
+          description: "Send relevant messages to the Director."
+          director:
+            server: bareos-dir
+            messages:
+              - all
+              - "!skipped"
+              - "!restored"
+          append:
+            file: "/var/log/bareos/bareos.log"
+            messages:
+              - all
+              - "!skipped"
+              - "!terminate"
+          console:
+            - all
+            - "!skipped"
+            - "!saved"
+        - name: "disabled-message"
+          enabled: no
+      bareos_sd_s3_profiles:
+        - name: exoscale
+          host: "sos.exo.io:443"
+          use_https: yes
+          access_key: "SomeAPIKey"
+          secret_key: "SomeSecret"
+          pricing_dir: ""
+          backend: "s3"
+          aws_auth_sign_version: 4
+          aws_region: "ch-gva-2"
