@@ -59,11 +59,9 @@ jobs:
           - image: "docker-molecule-images"
             tag: "fedora38"
           - image: "docker-molecule-images"
-            tag: "opensuse"
+            tag: "fedora39"
           - image: "docker-molecule-images"
             tag: "jammy"
-          - image: "docker-molecule-images"
-            tag: "focal"
     steps:
       - name: Checkout Role
         uses: actions/checkout@v4

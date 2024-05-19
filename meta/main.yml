@@ -20,13 +20,10 @@ galaxy_info:
     - name: Fedora
       versions:
         - "38"
-    - name: opensuse
-      versions:
-        - all
+        - "39"
     - name: Ubuntu
       versions:
         - jammy
-        - focal
 
   galaxy_tags:
     - bareos
