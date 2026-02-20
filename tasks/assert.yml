@@ -1,5 +1,4 @@
 ---
-
 - name: assert | Test bareos_sd_backup_configurations
   ansible.builtin.assert:
     that:
