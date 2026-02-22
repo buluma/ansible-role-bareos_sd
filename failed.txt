@@ -1,0 +1,1 @@
+ansible-role-bareos_sd [generator]: ERROR: Unhandled exception when retrieving 'DEFAULT_LOCAL_TMP': [Errno 1] Operation not permitted: '/Users/shadowwalker/.ansible/tmp/ansible-local-82653siqoxv5d'
