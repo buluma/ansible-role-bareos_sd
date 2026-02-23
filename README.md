@@ -11,80 +11,79 @@ Install and configure [Bareos](https://www.bareos.com/) Storage Daemon.
 This example is taken from [`molecule/default/converge.yml`](https://github.com/buluma/ansible-role-bareos_sd/blob/master/molecule/default/converge.yml) and is tested on each push, pull request and release.
 
 ```yaml
----
-- name: Converge
-  hosts: all
-  become: true
-  gather_facts: true
+  - name: Converge
+    hosts: all
+    become: true
+    gather_facts: true
 
-  roles:
-    - role: buluma.bareos_sd
-      bareos_sd_backup_configurations: true
-      bareos_sd_install_debug_packages: true
-      bareos_sd_devices:
-        - name: "FileStorage"
-          description: "File device. A connecting Director must have the same Name and MediaType."
-          media_type: "File"
-          archive_device: "/var/lib/bareos/storage"
-          label_media: true
-          random_access: true
-          automatic_mount: true
-          removable_media: false
-          always_open: false
-          maximum_concurrent_jobs: 1
-        - name: "disabled-device"
-          enabled: false
-      bareos_sd_directors:
-        - name: bareos-dir
-          password: "somepassword"
-        - name: "disabled-director"
-          enabled: false
-      bareos_sd_messages:
-        - name: "Standard"
-          description: "Send relevant messages to the Director."
-          director:
-            server: bareos-dir
-            messages:
+    roles:
+      - role: buluma.bareos_sd
+        bareos_sd_backup_configurations: true
+        bareos_sd_install_debug_packages: true
+        bareos_sd_devices:
+          - name: "FileStorage"
+            description: "File device. A connecting Director must have the same Name
+              and MediaType."
+            media_type: "File"
+            archive_device: "/var/lib/bareos/storage"
+            label_media: true
+            random_access: true
+            automatic_mount: true
+            removable_media: false
+            always_open: false
+            maximum_concurrent_jobs: 1
+          - name: "disabled-device"
+            enabled: false
+        bareos_sd_directors:
+          - name: bareos-dir
+            password: "somepassword"
+          - name: "disabled-director"
+            enabled: false
+        bareos_sd_messages:
+          - name: "Standard"
+            description: "Send relevant messages to the Director."
+            director:
+              server: bareos-dir
+              messages:
+                - all
+                - "!skipped"
+                - "!restored"
+            append:
+              file: "/var/log/bareos/bareos.log"
+              messages:
+                - all
+                - "!skipped"
+                - "!terminate"
+            console:
               - all
               - "!skipped"
-              - "!restored"
-          append:
-            file: "/var/log/bareos/bareos.log"
-            messages:
-              - all
-              - "!skipped"
-              - "!terminate"
-          console:
-            - all
-            - "!skipped"
-            - "!saved"
-        - name: "disabled-message"
-          enabled: false
-      bareos_sd_s3_profiles:
-        - name: exoscale
-          host: "sos.exo.io:443"
-          use_https: true
-          access_key: "SomeAPIKey"
-          secret_key: "SomeSecret"
-          pricing_dir: ""
-          backend: "s3"
-          aws_auth_sign_version: 4
-          aws_region: "ch-gva-2"
+              - "!saved"
+          - name: "disabled-message"
+            enabled: false
+        bareos_sd_s3_profiles:
+          - name: exoscale
+            host: "sos.exo.io:443"
+            use_https: true
+            access_key: "SomeAPIKey"
+            secret_key: "SomeSecret"
+            pricing_dir: ""
+            backend: "s3"
+            aws_auth_sign_version: 4
+            aws_region: "ch-gva-2"
 ```
 
 The machine needs to be prepared. In CI this is done using [`molecule/default/prepare.yml`](https://github.com/buluma/ansible-role-bareos_sd/blob/master/molecule/default/prepare.yml):
 
 ```yaml
----
-- name: Prepare
-  hosts: all
-  become: true
-  gather_facts: false
+  - name: Prepare
+    hosts: all
+    become: true
+    gather_facts: false
 
-  roles:
-    - role: buluma.bootstrap
-    - role: buluma.bareos_repository
-      bareos_repository_enable_tracebacks: true
+    roles:
+      - role: buluma.bootstrap
+      - role: buluma.bareos_repository
+        bareos_repository_enable_tracebacks: true
 ```
 
 Also see a [full explanation and example](https://buluma.github.io/how-to-use-these-roles.html) on how to use these roles.
@@ -94,7 +93,6 @@ Also see a [full explanation and example](https://buluma.github.io/how-to-use-th
 The default values for the variables are set in [`defaults/main.yml`](https://github.com/buluma/ansible-role-bareos_sd/blob/master/defaults/main.yml):
 
 ```yaml
----
 # defaults file for bareos_sd
 
 # The Storage Daemon has these configuration parameters.
