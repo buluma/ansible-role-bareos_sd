@@ -5,6 +5,6 @@
   gather_facts: false
 
   roles:
-  - role: buluma.bootstrap
-  - role: buluma.bareos_repository
-    bareos_repository_enable_tracebacks: true
+    - role: buluma.bootstrap
+    - role: buluma.bareos_repository
+      bareos_repository_enable_tracebacks: true
