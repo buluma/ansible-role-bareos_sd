@@ -11,6 +11,7 @@
 
     - name: Test configuration for warnings
       ansible.builtin.command:
+      changed_when: false
         cmd: bareos-sd --test-config
       become_user: bareos
       register: bareos_sd_test_config
