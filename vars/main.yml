@@ -17,5 +17,5 @@ _bareos_sd_debug_packages:
     - bareos-debuginfo
     - gdb
 bareos_sd_debug_packages:
-  "{{ _bareos_sd_debug_packages[ansible_facts.os_family ~ '-' ~ ansible_facts.distribution_major_version] | default(_bareos_sd_debug_packages[ansible_facts.os_family]
+  "{{ _bareos_sd_debug_packages[ansible_facts['os_family'] ~ '-' ~ ansible_facts['distribution_major_version']] | default(_bareos_sd_debug_packages[ansible_facts['os_family']]
   | default(_bareos_sd_debug_packages['default'])) }}"
