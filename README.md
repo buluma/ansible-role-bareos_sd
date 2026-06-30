@@ -179,3 +179,7 @@ If you find issues, please register them on [GitHub](https://github.com/buluma/a
 ## [Author Information](#author-information)
 
 [buluma](https://buluma.github.io/)
+
+### Get Help
+- Report issues: https://github.com/buluma/ansible-role-bareos_sd/issues/new
+- See docs: https://docs.ansible.com/collection/gallery/ansible-role-bareos_sd
